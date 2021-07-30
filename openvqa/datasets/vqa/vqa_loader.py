@@ -8,6 +8,7 @@ import glob, json, re, en_vectors_web_lg
 from openvqa.core.base_dataset import BaseDataSet
 from openvqa.utils.ans_punct import prep_ans
 
+
 class DataSet(BaseDataSet):
     def __init__(self, __C):
         super(DataSet, self).__init__()
@@ -19,9 +20,9 @@ class DataSet(BaseDataSet):
 
         # Loading all image paths
         frcn_feat_path_list = \
-            glob.glob(__C.FEATS_PATH[__C.DATASET]['train'] + '/*.npz') + \
-            glob.glob(__C.FEATS_PATH[__C.DATASET]['val'] + '/*.npz') + \
-            glob.glob(__C.FEATS_PATH[__C.DATASET]['test'] + '/*.npz')
+            glob.glob(__C.FEATS_PATH[__C.DATASET]['train'] + '/*.npy') + \
+            glob.glob(__C.FEATS_PATH[__C.DATASET]['val'] + '/*.npy') + \
+            glob.glob(__C.FEATS_PATH[__C.DATASET]['test'] + '/*.npy')
 
         # Loading question word list
         stat_ques_list = \
@@ -53,7 +54,6 @@ class DataSet(BaseDataSet):
 
         print(' ========== Dataset size:', self.data_size)
 
-
         # ------------------------
         # ---- Data statistic ----
         # ------------------------
@@ -77,8 +77,6 @@ class DataSet(BaseDataSet):
         print('Finished!')
         print('')
 
-
-
     def img_feat_path_load(self, path_list):
         iid_to_path = {}
 
@@ -89,7 +87,6 @@ class DataSet(BaseDataSet):
 
         return iid_to_path
 
-
     def ques_load(self, ques_list):
         qid_to_ques = {}
 
@@ -98,7 +95,6 @@ class DataSet(BaseDataSet):
             qid_to_ques[qid] = ques
 
         return qid_to_ques
-
 
     def tokenize(self, stat_ques_list, use_glove):
         token_to_ix = {
@@ -132,7 +128,6 @@ class DataSet(BaseDataSet):
 
         return token_to_ix, pretrained_emb
 
-
     # def ans_stat(self, stat_ans_list, ans_freq):
     #     ans_to_ix = {}
     #     ix_to_ans = {}
@@ -161,8 +156,6 @@ class DataSet(BaseDataSet):
 
         return ans_to_ix, ix_to_ans
 
-
-
     # ----------------------------------------------
     # ---- Real-Time Processing Implementations ----
     # ----------------------------------------------
@@ -189,24 +182,29 @@ class DataSet(BaseDataSet):
 
             return ques_ix_iter, np.zeros(1), iid
 
-
     def load_img_feats(self, idx, iid):
         frcn_feat = np.load(self.iid_to_frcn_feat_path[iid])
-        frcn_feat_x = frcn_feat['x'].transpose((1, 0))
-        frcn_feat_iter = self.proc_img_feat(frcn_feat_x, img_feat_pad_size=self.__C.FEAT_SIZE['vqa']['FRCN_FEAT_SIZE'][0])
+        frcn_feat = frcn_feat.astype(np.float32)
+        # frcn_feat_x = frcn_feat['x'].transpose((1, 0))
+        frcn_feat_x = frcn_feat.reshape((2048, 64)).transpose((1, 0))
 
-        bbox_feat_iter = self.proc_img_feat(
-            self.proc_bbox_feat(
-                frcn_feat['bbox'],
-                (frcn_feat['image_h'], frcn_feat['image_w'])
-            ),
-            img_feat_pad_size=self.__C.FEAT_SIZE['vqa']['BBOX_FEAT_SIZE'][0]
-        )
+        frcn_feat_iter = self.proc_img_feat(frcn_feat_x,
+                                            img_feat_pad_size=self.__C.FEAT_SIZE['vqa']['FRCN_FEAT_SIZE'][0])
+
+        if self.__C.FEATURES == 'region':
+            bbox_feat_iter = self.proc_img_feat(
+                self.proc_bbox_feat(
+                    frcn_feat['bbox'],
+                    (frcn_feat['image_h'], frcn_feat['image_w'])
+                ),
+                img_feat_pad_size=self.__C.FEAT_SIZE['vqa']['BBOX_FEAT_SIZE'][0]
+            )
+        elif self.__C.FEATURES == 'grid':
+            bbox_feat_iter = np.zeros(1)
+
         grid_feat_iter = np.zeros(1)
 
         return frcn_feat_iter, grid_feat_iter, bbox_feat_iter
-
-
 
     # ------------------------------------
     # ---- Real-Time Processing Utils ----
@@ -225,7 +223,6 @@ class DataSet(BaseDataSet):
 
         return img_feat
 
-
     def proc_bbox_feat(self, bbox, img_shape):
         if self.__C.BBOX_NORMALIZE:
             bbox_nm = np.zeros((bbox.shape[0], 4), dtype=np.float32)
@@ -238,7 +235,6 @@ class DataSet(BaseDataSet):
         # bbox_feat[:, 4] = (bbox[:, 2] - bbox[:, 0]) * (bbox[:, 3] - bbox[:, 1]) / float(img_shape[0] * img_shape[1])
 
         return bbox
-
 
     def proc_ques(self, ques, token_to_ix, max_token):
         ques_ix = np.zeros(max_token, np.int64)
@@ -260,7 +256,6 @@ class DataSet(BaseDataSet):
 
         return ques_ix
 
-
     def get_score(self, occur):
         if occur == 0:
             return .0
@@ -272,7 +267,6 @@ class DataSet(BaseDataSet):
             return .9
         else:
             return 1.
-
 
     def proc_ans(self, ans, ans_to_ix):
         ans_score = np.zeros(ans_to_ix.__len__(), np.float32)

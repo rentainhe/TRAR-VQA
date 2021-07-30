@@ -21,26 +21,13 @@ def parse_args():
 
     parser.add_argument('--MODEL', dest='MODEL',
                       choices=[
-                           'mcan_small',
-                           'mcan_large',
-                           'ban_4',
-                           'ban_8',
-                           'mfb',
-                           'mfh',
-                           'mem',
-                           'butd',
-                           'mmnasnet'
+                           'trar_small',
+                           'trar_large',
                            ]
                         ,
                       help='{'
-                           'mcan_small,'
-                           'mcan_large,'
-                           'ban_4,'
-                           'ban_8,'
-                           'mfb,'
-                           'mfh,'
-                           'butd,'
-                           'mmnasnet,'
+                           'trar_small,'
+                           'trar_large,'
                            '}'
                         ,
                       type=str, required=True)

@@ -1,13 +1,8 @@
-# --------------------------------------------------------
-# OpenVQA
-# Written by Yuhao Cui https://github.com/cuiyuhao1996
-# --------------------------------------------------------
-
 from openvqa.utils.make_mask import make_mask
 from openvqa.ops.fc import FC, MLP
 from openvqa.ops.layer_norm import LayerNorm
-from openvqa.models.mcan.mca import MCA_ED
-from openvqa.models.mcan.adapter import Adapter
+from openvqa.models.TRAR.mca import TRAR_ED
+from openvqa.models.TRAR.adapter import Adapter
 
 import torch.nn as nn
 import torch.nn.functional as F
@@ -57,7 +52,7 @@ class AttFlat(nn.Module):
 
 
 # -------------------------
-# ---- Main MCAN Model ----
+# ---- Main TRAR Model ----
 # -------------------------
 
 class Net(nn.Module):
@@ -83,7 +78,7 @@ class Net(nn.Module):
 
         self.adapter = Adapter(__C)
 
-        self.backbone = MCA_ED(__C)
+        self.backbone = TRAR_ED(__C)
 
         # Flatten to vector
         self.attflat_img = AttFlat(__C)

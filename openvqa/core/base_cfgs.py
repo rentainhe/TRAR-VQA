@@ -169,7 +169,7 @@ class BaseCfgs(PATH):
          !!! Warning: To avoid ambiguity, the value of keys should be defined as string type.
         If you not define the OPT_PARAMS, all parameters of optimizer will be set as default.
         Example:
-        mcan_small.yml ->
+        trar_small.yml ->
             OPT: Adam
             OPT_PARAMS: {betas: '(0.9, 0.98)', eps: '1e-9'}
         '''
