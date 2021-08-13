@@ -21,13 +21,11 @@ def parse_args():
 
     parser.add_argument('--MODEL', dest='MODEL',
                       choices=[
-                           'trar_small',
-                           'trar_large',
+                           'trar'
                            ]
                         ,
                       help='{'
-                           'trar_small,'
-                           'trar_large,'
+                           'trar'
                            '}'
                         ,
                       type=str, required=True)

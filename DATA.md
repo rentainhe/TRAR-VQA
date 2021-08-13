@@ -36,7 +36,7 @@ and check the following tutorial [TRAR_FEATURE_EXTRACTION](https://github.com/re
 
 - QA Annotations
 
-Download all the annotation `json` file for VQA-v2 from [OneDrive](https://onedrive.live.com/?id=31C59C3699CBBDBC%21702&cid=31C59C3699CBBDBC) or [BaiduYun]()
+Download all the annotation `json` file for VQA-v2 from [OneDrive](https://onedrive.live.com/?id=31C59C3699CBBDBC%21702&cid=31C59C3699CBBDBC) or [BaiduYun](https://pan.baidu.com/s/14wUWg23wuanj7mF_BiGrIQ) with code `6fb6`
 
 In addition, You can also use VQA samples from the Visual Genome to augment the training samples following [openvqa](https://github.com/MILVLG/openvqa), you can directly download VG question and annotation files from [OneDrive](https://awma1-my.sharepoint.com/personal/yuz_l0_tn/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fyuz%5Fl0%5Ftn%2FDocuments%2Fshare%2Fvisualgenome%5Fqa&originalPath=aHR0cHM6Ly9hd21hMS1teS5zaGFyZXBvaW50LmNvbS86ZjovZy9wZXJzb25hbC95dXpfbDBfdG4vRW1WSFZlR2RjazFJaWZQY3pHbVhvYU1CRmlTdnNlZ0E2dGZfUHF4TDNIWGNsdz9ydGltZT1SUU1pT3hwZTJVZw) or [BaiduYun](https://pan.baidu.com/s/1QCOtSxJGQA01DnhUg7FFtQ#list/path=%2F)
 

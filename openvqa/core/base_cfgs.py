@@ -80,7 +80,7 @@ class BaseCfgs(PATH):
         # All features size
         self.FEAT_SIZE = {
             'vqa': {
-                'FRCN_FEAT_SIZE': (100, 2048),
+                'FRCN_FEAT_SIZE': (64, 2048),
                 'BBOX_FEAT_SIZE': (100, 5),
             },
             'clevr': {

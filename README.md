@@ -31,9 +31,6 @@ pip install -r requirements.txt
 ```
 
 ### Data preparation
-see [DATA.md]()
-
-
-## Main Results on VQA2.0 and CLEVR dataset
+see [DATA.md](https://github.com/rentainhe/TRAR-VQA/blob/main/DATA.md)
 
 ## Citing TRAR

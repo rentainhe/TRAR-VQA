@@ -21,8 +21,8 @@ class DataSet(BaseDataSet):
         # Loading all image paths
         frcn_feat_path_list = \
             glob.glob(__C.FEATS_PATH[__C.DATASET]['train'] + '/*.npy') + \
-            glob.glob(__C.FEATS_PATH[__C.DATASET]['val'] + '/*.npy') + \
-            glob.glob(__C.FEATS_PATH[__C.DATASET]['test'] + '/*.npy')
+            glob.glob(__C.FEATS_PATH[__C.DATASET]['val'] + '/*.npy')
+            # glob.glob(__C.FEATS_PATH[__C.DATASET]['test'] + '/*.npy')
 
         # Loading question word list
         stat_ques_list = \
@@ -190,17 +190,14 @@ class DataSet(BaseDataSet):
 
         frcn_feat_iter = self.proc_img_feat(frcn_feat_x,
                                             img_feat_pad_size=self.__C.FEAT_SIZE['vqa']['FRCN_FEAT_SIZE'][0])
-
-        if self.__C.FEATURES == 'region':
-            bbox_feat_iter = self.proc_img_feat(
-                self.proc_bbox_feat(
-                    frcn_feat['bbox'],
-                    (frcn_feat['image_h'], frcn_feat['image_w'])
-                ),
-                img_feat_pad_size=self.__C.FEAT_SIZE['vqa']['BBOX_FEAT_SIZE'][0]
-            )
-        elif self.__C.FEATURES == 'grid':
-            bbox_feat_iter = np.zeros(1)
+        # bbox_feat_iter = self.proc_img_feat(
+        #     self.proc_bbox_feat(
+        #         frcn_feat['bbox'],
+        #         (frcn_feat['image_h'], frcn_feat['image_w'])
+        #     ),
+        #     img_feat_pad_size=self.__C.FEAT_SIZE['vqa']['BBOX_FEAT_SIZE'][0]
+        # )
+        bbox_feat_iter = np.zeros(1)
 
         grid_feat_iter = np.zeros(1)
 
