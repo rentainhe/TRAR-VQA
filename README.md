@@ -19,8 +19,9 @@ This is an official implement for ICCV 2021 paper ["TRAR: Routing the Attention 
 ## Table of Contents
 0. [Installation](#Installation)
 1. [Dataset setup](#Dataset-setup)
-2. [Training](#Training)
-3. [Validation and Testing](#Validation-and-Testing)
+2. [Config Introduction](#Config-Introduction)
+3. [Training](#Training)
+4. [Validation and Testing](#Validation-and-Testing)
 
 ### Installation
 - Clone this repo
@@ -49,6 +50,31 @@ pip install en_vectors_web_lg-2.1.0.tar.gz
 
 ### Dataset setup
 see [DATA.md](https://github.com/rentainhe/TRAR-VQA/blob/main/DATA.md)
+
+### Config Introduction
+In [trar.yml]("configs/vqa/trar.yml) config we have these specific settings for `TRAR` model
+```
+ORDERS: [0, 1, 2, 3]
+IMG_SCALE: 8 
+ROUTING: 'hard' # {'soft', 'hard'}
+ROUTING_MODE: 'attention' # {'attention', 'avg'}
+TAU_POLICY: 1 # {0: 'SLOW', 1: 'FAST', 2: 'FINETUNE'}
+TAU_MAX: 10
+TAU_MIN: 0.1
+```
+- `ORDERS=list`, to set the local attention window size for routing.`0` for global attention.
+- `IMG_SCALE=int`, which should be equal to the `image feature size` used for training. You should set `IMG_SCALE: 16` for `16 × 16` training features.
+- `ROUTING={'hard', 'soft'}`, to set the `Routing Block Type` in TRAR model.
+- `ROUTING_MODE={'attention', 'avg'}`, to set the `Downsample Strategy` used in `Routing Block`.
+- `TAU_POLICY={0, 1, 2}`, to set the `temperature schedule` in training TRAR when using `ROUTING: 'hard'`.
+- `TAU_MAX=int`, to set the maximum temperature in training.
+- `TAU_MIN=int`, to set the minimum temperature in training.
+
+**`TAU_POLICY` visualization**
+For `MAX_EPOCH=13` with `WARMUP_EPOCH=3` we have the following policy strategy:
+<p align="center">
+	<img src="misc/policy_visualization.png" width="550">
+</p>
 
 ### Training
 **Train model on VQA-v2 with default hyperparameters:**

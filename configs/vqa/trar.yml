@@ -1,7 +1,5 @@
 # Network
 MODEL_USE: TRAR
-ORDERS: [0, 1, 2, 3]
-IMG_SCALE: 8
 LAYER: 6
 HIDDEN_SIZE: 512
 FF_SIZE: 2048
@@ -11,6 +9,10 @@ FLAT_MLP_SIZE: 512
 FLAT_GLIMPSES: 1
 FLAT_OUT_SIZE: 1024
 USE_BBOX_FEAT: False
+
+# TRAR Specific configs
+ORDERS: [0, 1, 2, 3]
+IMG_SCALE: 8
 ROUTING: 'hard' # 'soft' or 'hard'
 ROUTING_MODE: 'attention' # 'attention' or 'avg'
 TAU_POLICY: 1 # SLOW 0, FAST 1, FINETUNE 2
