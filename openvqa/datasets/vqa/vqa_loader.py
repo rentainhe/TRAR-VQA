@@ -190,6 +190,7 @@ class DataSet(BaseDataSet):
 
         frcn_feat_iter = self.proc_img_feat(frcn_feat_x,
                                             img_feat_pad_size=self.__C.FEAT_SIZE['vqa']['FRCN_FEAT_SIZE'][0])
+                                            
         # bbox_feat_iter = self.proc_img_feat(
         #     self.proc_bbox_feat(
         #         frcn_feat['bbox'],
