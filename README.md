@@ -71,6 +71,7 @@ TAU_MIN: 0.1
 - `TAU_MIN=int`, to set the minimum temperature in training.
 
 **`TAU_POLICY` visualization**
+
 For `MAX_EPOCH=13` with `WARMUP_EPOCH=3` we have the following policy strategy:
 <p align="center">
 	<img src="misc/policy_visualization.png" width="550">
