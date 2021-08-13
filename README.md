@@ -1,5 +1,5 @@
 # TRAR-VQA
-This is an official implement for ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"](). It currently includes the code for training TRAR on VQA2.0
+This is an official implement for ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"](). It currently includes the code for training TRAR on VQA2.0. We built our TRAR project based on [openvqa](https://github.com/MILVLG/openvqa). Our TRAR model for REC task is coming soon.
 
 ## Updates
 2021/8/13
@@ -141,5 +141,9 @@ Result file are saved at:
 
 `results/result_test/result_run_<CKPT_V>_<CKPT_E>.json`
 
+## Acknowledgements
+- [openvqa](https://github.com/MILVLG/openvqa)
+- [grid-feats-vqa](https://github.com/facebookresearch/grid-feats-vqa)
 
-## Citing TRAR
+## Citation
+
