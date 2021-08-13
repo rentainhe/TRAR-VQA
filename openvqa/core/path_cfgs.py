@@ -28,7 +28,7 @@ class PATH:
             'vqa': {
                 'train': self.DATA_PATH['vqa'] + '/feats' + '/train2014',
                 'val': self.DATA_PATH['vqa'] + '/feats' + '/val2014',
-                # 'test': self.DATA_PATH['vqa'] + '/feats' + '/test2015',
+                'test': self.DATA_PATH['vqa'] + '/feats' + '/test2015',
             },
             'clevr': {
                 'train': self.DATA_PATH['clevr'] + '/feats' + '/train',

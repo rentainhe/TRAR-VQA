@@ -21,8 +21,8 @@ class DataSet(BaseDataSet):
         # Loading all image paths
         frcn_feat_path_list = \
             glob.glob(__C.FEATS_PATH[__C.DATASET]['train'] + '/*.npy') + \
-            glob.glob(__C.FEATS_PATH[__C.DATASET]['val'] + '/*.npy')
-            # glob.glob(__C.FEATS_PATH[__C.DATASET]['test'] + '/*.npy')
+            glob.glob(__C.FEATS_PATH[__C.DATASET]['val'] + '/*.npy') + \
+            glob.glob(__C.FEATS_PATH[__C.DATASET]['test'] + '/*.npy')
 
         # Loading question word list
         stat_ques_list = \
@@ -185,10 +185,8 @@ class DataSet(BaseDataSet):
     def load_img_feats(self, idx, iid):
         frcn_feat = np.load(self.iid_to_frcn_feat_path[iid])
         frcn_feat = frcn_feat.astype(np.float32)
-        # frcn_feat_x = frcn_feat['x'].transpose((1, 0))
-        frcn_feat_x = frcn_feat.reshape((2048, 64)).transpose((1, 0))
 
-        frcn_feat_iter = self.proc_img_feat(frcn_feat_x,
+        frcn_feat_iter = self.proc_img_feat(frcn_feat,
                                             img_feat_pad_size=self.__C.FEAT_SIZE['vqa']['FRCN_FEAT_SIZE'][0])
                                             
         # bbox_feat_iter = self.proc_img_feat(
