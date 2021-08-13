@@ -16,8 +16,13 @@ This is an official implement for ICCV 2021 paper ["TRAR: Routing the Attention 
 	<img src="misc/trar_overall.png" width="550">
 </p>
 
-## Usage
-### Install
+## Table of Contents
+0. [Installation](#Installation)
+1. [Dataset setup](#Dataset-setup)
+2. [Training](#Training)
+3. [Validation and Testing](#Validation-and-Testing)
+
+### Installation
 - Clone this repo
 ```bash
 git clone https://github.com/rentainhe/TRAR-VQA.git
@@ -42,7 +47,7 @@ wget https://github.com/explosion/spacy-models/releases/download/en_vectors_web_
 pip install en_vectors_web_lg-2.1.0.tar.gz
 ```
 
-### Data preparation
+### Dataset setup
 see [DATA.md](https://github.com/rentainhe/TRAR-VQA/blob/main/DATA.md)
 
 ### Training
