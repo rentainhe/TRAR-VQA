@@ -13,8 +13,25 @@ from openvqa.utils.optim import get_optim, adjust_lr
 from utils.test_engine import test_engine, ckpt_proc
 
 
-def train_engine(__C, dataset, dataset_eval=None):
+# helpers
+def set_training_tau(__C, net, tau):
+    if __C.N_GPU > 1:
+        net.module.backbone.set_tau(tau)
+    else:
+        net.backbone.set_tau(tau)
+    return tau
 
+
+# TODO
+# def set_backbone_training_status(__C, net):
+#     if __C.N_GPU > 1:
+#         net.module.backbone.set_tau(tau)
+#     else:
+#         net.backbone.set_tau(tau)
+#     return tau
+
+
+def train_engine(__C, dataset, dataset_eval=None):
     data_size = dataset.data_size
     token_size = dataset.token_size
     ans_size = dataset.ans_size
@@ -33,7 +50,8 @@ def train_engine(__C, dataset, dataset_eval=None):
         net = nn.DataParallel(net, device_ids=__C.DEVICES)
 
     # Define Loss Function
-    loss_fn = eval('torch.nn.' + __C.LOSS_FUNC_NAME_DICT[__C.LOSS_FUNC] + "(reduction='" + __C.LOSS_REDUCTION + "').cuda()")
+    loss_fn = eval(
+        'torch.nn.' + __C.LOSS_FUNC_NAME_DICT[__C.LOSS_FUNC] + "(reduction='" + __C.LOSS_REDUCTION + "').cuda()")
 
     # Load checkpoint if resume training
     if __C.RESUME:
@@ -64,13 +82,13 @@ def train_engine(__C, dataset, dataset_eval=None):
         optim = get_optim(__C, net, data_size, ckpt['lr_base'])
         optim._step = int(data_size / __C.BATCH_SIZE * start_epoch)
         optim.optimizer.load_state_dict(ckpt['optimizer'])
-        
+
         if ('ckpt_' + __C.VERSION) not in os.listdir(__C.CKPTS_PATH):
             os.mkdir(__C.CKPTS_PATH + '/ckpt_' + __C.VERSION)
 
     else:
         if ('ckpt_' + __C.VERSION) not in os.listdir(__C.CKPTS_PATH):
-            #shutil.rmtree(__C.CKPTS_PATH + '/ckpt_' + __C.VERSION)
+            # shutil.rmtree(__C.CKPTS_PATH + '/ckpt_' + __C.VERSION)
             os.mkdir(__C.CKPTS_PATH + '/ckpt_' + __C.VERSION)
 
         optim = get_optim(__C, net, data_size)
@@ -80,17 +98,6 @@ def train_engine(__C, dataset, dataset_eval=None):
     named_params = list(net.named_parameters())
     grad_norm = np.zeros(len(named_params))
 
-    # Define multi-thread dataloader
-    # if __C.SHUFFLE_MODE in ['external']:
-    #     dataloader = Data.DataLoader(
-    #         dataset,
-    #         batch_size=__C.BATCH_SIZE,
-    #         shuffle=False,
-    #         num_workers=__C.NUM_WORKERS,
-    #         pin_memory=__C.PIN_MEM,
-    #         drop_last=True
-    #     )
-    # else:
     dataloader = Data.DataLoader(
         dataset,
         batch_size=__C.BATCH_SIZE,
@@ -128,6 +135,33 @@ def train_engine(__C, dataset, dataset_eval=None):
         if epoch in __C.LR_DECAY_LIST:
             adjust_lr(optim, __C.LR_DECAY_R)
 
+        # Set Training Temperature
+        if __C.ROUTING == 'hard':
+            print("setting training temperature...")
+            # Slow
+            if __C.TAU_POLICY == 0:
+                tau = __C.TAU_MAX - (__C.TAU_MAX - __C.TAU_MIN) * epoch / (__C.MAX_EPOCH - 1)
+                set_training_tau(__C, net, tau)
+            # Fast
+            elif __C.TAU_POLICY == 1:
+                if epoch < __C.WARMUP_EPOCH:
+                    tau = __C.TAU_MAX - (__C.TAU_MAX - 1) * epoch / 3
+                    set_training_tau(__C, net, tau)
+                else:
+                    tau = 1.0 - (epoch - 3) / 10
+                    set_training_tau(__C, net, tau)
+            # Finetune
+            elif __C.TAU_POLICY == 2:
+                if epoch < __C.MAX_EPOCH - 1:
+                    tau = 1.0 - (epoch - 13) / 4
+                    set_training_tau(__C, net, tau)
+                else:
+                    tau = 0.1
+                    set_training_tau(__C, net, tau)
+            print("epoch %d: setting training temperature to %2.5f" % (epoch, tau))
+        elif __C.ROUTING == 'soft':
+            print("using soft routing block")
+
         # Externally shuffle data list
         # if __C.SHUFFLE_MODE == 'external':
         #     dataset.shuffle_list(dataset.ans_list)
@@ -156,13 +190,13 @@ def train_engine(__C, dataset, dataset_eval=None):
 
                 sub_frcn_feat_iter = \
                     frcn_feat_iter[accu_step * __C.SUB_BATCH_SIZE:
-                                  (accu_step + 1) * __C.SUB_BATCH_SIZE]
+                                   (accu_step + 1) * __C.SUB_BATCH_SIZE]
                 sub_grid_feat_iter = \
                     grid_feat_iter[accu_step * __C.SUB_BATCH_SIZE:
-                                  (accu_step + 1) * __C.SUB_BATCH_SIZE]
+                                   (accu_step + 1) * __C.SUB_BATCH_SIZE]
                 sub_bbox_feat_iter = \
                     bbox_feat_iter[accu_step * __C.SUB_BATCH_SIZE:
-                                  (accu_step + 1) * __C.SUB_BATCH_SIZE]
+                                   (accu_step + 1) * __C.SUB_BATCH_SIZE]
                 sub_ques_ix_iter = \
                     ques_ix_iter[accu_step * __C.SUB_BATCH_SIZE:
                                  (accu_step + 1) * __C.SUB_BATCH_SIZE]
@@ -232,7 +266,7 @@ def train_engine(__C, dataset, dataset_eval=None):
             optim.step()
 
         time_end = time.time()
-        elapse_time = time_end-time_start
+        elapse_time = time_end - time_start
         print('Finished in {}s'.format(int(elapse_time)))
         epoch_finish = epoch + 1
 
@@ -269,7 +303,7 @@ def train_engine(__C, dataset, dataset_eval=None):
             'Epoch: ' + str(epoch_finish) +
             ', Loss: ' + str(loss_sum / data_size) +
             ', Lr: ' + str(optim._rate) + '\n' +
-            'Elapsed time: ' + str(int(elapse_time)) + 
+            'Elapsed time: ' + str(int(elapse_time)) +
             ', Speed(s/batch): ' + str(elapse_time / step) +
             '\n\n'
         )
@@ -277,12 +311,14 @@ def train_engine(__C, dataset, dataset_eval=None):
 
         # Eval after every epoch
         if dataset_eval is not None:
+            net.backbone.set_training_status(False)
             test_engine(
                 __C,
                 dataset_eval,
                 state_dict=net.state_dict(),
                 validation=True
             )
+            net.backbone.set_training_status(True)
 
         # if self.__C.VERBOSE:
         #     logfile = open(

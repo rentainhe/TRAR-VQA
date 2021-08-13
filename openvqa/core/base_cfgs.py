@@ -83,11 +83,6 @@ class BaseCfgs(PATH):
                 'FRCN_FEAT_SIZE': (100, 2048),
                 'BBOX_FEAT_SIZE': (100, 5),
             },
-            'gqa': {
-                'FRCN_FEAT_SIZE': (100, 2048),
-                'GRID_FEAT_SIZE': (49, 2048),
-                'BBOX_FEAT_SIZE': (100, 5),
-            },
             'clevr': {
                 'GRID_FEAT_SIZE': (196, 1024),
             },
@@ -169,7 +164,7 @@ class BaseCfgs(PATH):
          !!! Warning: To avoid ambiguity, the value of keys should be defined as string type.
         If you not define the OPT_PARAMS, all parameters of optimizer will be set as default.
         Example:
-        trar_small.yml ->
+        trar.yml ->
             OPT: Adam
             OPT_PARAMS: {betas: '(0.9, 0.98)', eps: '1e-9'}
         '''
@@ -286,7 +281,6 @@ class BaseCfgs(PATH):
 
         self.TASK_LOSS_CHECK = {
             'vqa': ['bce', 'kld'],
-            'gqa': ['ce'],
             'clevr': ['ce'],
         }
 

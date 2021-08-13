@@ -57,7 +57,7 @@ class AttFlat(nn.Module):
 def getImgMasks(scale=16, order=2):
     """
     :param scale: Feature Map Scale
-    :param order: Local Window Size, e.g., order=2 equals to local windows size (5, 5)
+    :param order: Local Window Size, e.g., order=2 equals to windows size (5, 5)
     :return: masks = (scale**2, scale**2)
     """
     masks = []
@@ -91,15 +91,15 @@ def getMasks(x_mask, __C):
     return mask_list
 
 
-# -----------------------------------
-# ---- Soft or Hard Routing Gate ----
-# -----------------------------------
+# ------------------------------------
+# ---- Soft or Hard Routing Block ----
+# ------------------------------------
 
 # Routing weight prediction layer
 # Weight obtained by softmax or gumbel softmax
-class SoftRoutingGate(nn.Module):
+class SoftRoutingBlock(nn.Module):
     def __init__(self, in_channel, out_channel, mode='attention', reduction=2):
-        super(SoftRoutingGate, self).__init__()
+        super(SoftRoutingBlock, self).__init__()
         self.mode = mode
 
         if mode == 'attention':
@@ -132,9 +132,9 @@ class SoftRoutingGate(nn.Module):
         ) == 0).unsqueeze(1).unsqueeze(2)
 
 
-class HardRoutingGate(nn.Module):
+class HardRoutingBlock(nn.Module):
     def __init__(self, in_channel, out_channel, mode='attention', reduction=2):
-        super(HardRoutingGate, self).__init__()
+        super(HardRoutingBlock, self).__init__()
         self.mode = mode
 
         if mode == 'attention':
@@ -243,7 +243,102 @@ class MHAtt(nn.Module):
         return torch.matmul(att_map, value)
 
 
-# ---------------------------
+# -------------------------------------
+# ---- Dynmaic Span Self-Attention ----
+# -------------------------------------
+
+class SARoutingBlock(nn.Module):
+    """
+    Self-Attention Routing Block
+    """
+
+    def __init__(self, __C):
+        super(SARoutingBlock, self).__init__()
+        self.__C = __C
+
+        self.linear_v = nn.Linear(__C.HIDDEN_SIZE, __C.HIDDEN_SIZE)
+        self.linear_k = nn.Linear(__C.HIDDEN_SIZE, __C.HIDDEN_SIZE)
+        self.linear_q = nn.Linear(__C.HIDDEN_SIZE, __C.HIDDEN_SIZE)
+        self.linear_merge = nn.Linear(__C.HIDDEN_SIZE, __C.HIDDEN_SIZE)
+        if __C.ROUTING == 'hard':
+            self.routing_block = HardRoutingBlock(__C.HIDDEN_SIZE, len(__C.ORDERS), __C.ROUTING_MODE)
+        elif __C.ROUTING == 'soft':
+            self.routing_block = SoftRoutingBlock(__C.HIDDEN_SIZE, len(__C.ORDERS), __C.ROUTING_MODE)
+
+        self.dropout = nn.Dropout(__C.DROPOUT_R)
+
+    def forward(self, v, k, q, masks, tau, training):
+        n_batches = q.size(0)
+        x = v
+
+        alphas = self.routing_block(x, tau, masks)
+
+        if not training:
+            alphas = self.argmax_binarize(alphas)
+
+        v = self.linear_v(v).view(
+            n_batches,
+            -1,
+            self.__C.MULTI_HEAD,
+            int(self.__C.HIDDEN_SIZE / self.__C.MULTI_HEAD)
+        ).transpose(1, 2)
+
+        k = self.linear_k(k).view(
+            n_batches,
+            -1,
+            self.__C.MULTI_HEAD,
+            int(self.__C.HIDDEN_SIZE / self.__C.MULTI_HEAD)
+        ).transpose(1, 2)
+
+        q = self.linear_q(q).view(
+            n_batches,
+            -1,
+            self.__C.MULTI_HEAD,
+            int(self.__C.HIDDEN_SIZE / self.__C.MULTI_HEAD)
+        ).transpose(1, 2)
+
+        att_list = self.routing_att(v, k, q, masks)
+        att_map = torch.einsum('bl,blcnm->bcnm', alphas, att_list)
+
+        atted = torch.matmul(att_map, v)
+
+        atted = atted.transpose(1, 2).contiguous().view(
+            n_batches,
+            -1,
+            self.__C.HIDDEN_SIZE
+        )
+
+        atted = self.linear_merge(atted)
+
+        return atted
+
+    def routing_att(self, value, key, query, masks):
+        d_k = query.size(-1)
+        scores = torch.matmul(
+            query, key.transpose(-2, -1)
+        ) / math.sqrt(d_k)
+
+        for i in range(len(masks)):
+            mask = masks[i]
+            scores_temp = scores.masked_fill(mask, -1e9)
+            att_map = F.softmax(scores_temp, dim=-1)
+            att_map = self.dropout(att_map)
+            if i == 0:
+                att_list = att_map.unsqueeze(1)
+            else:
+                att_list = torch.cat((att_list, att_map.unsqueeze(1)), 1)
+
+        return att_list
+
+    def argmax_binarize(self, alphas):
+        n = alphas.size()[0]
+        out = torch.zeros_like(alphas)
+        indexes = alphas.argmax(-1)
+        out[torch.arange(n), indexes] = 1
+        return out
+    # ---------------------------
+
+
 # ---- Feed Forward Nets ----
 # ---------------------------
 
@@ -291,18 +386,17 @@ class Encoder(nn.Module):
 
         return y
 
-# -------------------------------------
-# ---- Transformer Routing Encoder ----
-# -------------------------------------
+
+# ---------------------------------
+# ---- Multimodal TRAR Decoder ----
+# ---------------------------------
 class TRAR(nn.Module):
     def __init__(self, __C):
         super(TRAR, self).__init__()
 
-        self.mhatt1 = MHAtt(__C)
+        self.mhatt1 = SARoutingBlock(__C)
         self.mhatt2 = MHAtt(__C)
         self.ffn = FFN(__C)
-
-        self.orders = len(__C.ORDERS)
 
         self.dropout1 = nn.Dropout(__C.DROPOUT_R)
         self.norm1 = LayerNorm(__C.HIDDEN_SIZE)
@@ -313,16 +407,10 @@ class TRAR(nn.Module):
         self.dropout3 = nn.Dropout(__C.DROPOUT_R)
         self.norm3 = LayerNorm(__C.HIDDEN_SIZE)
 
-        if __C.ROUTING == 'hard':
-            self.prediction_layer = HardRoutingGate(__C.HIDDEN_SIZE, self.orders, __C.ROUTING_MODE)
-        elif __C.ROUTING == 'soft':
-            self.prediction_layer = SoftRoutingGate(__C.HIDDEN_SIZE, self.orders, __C.ROUTING_MODE)
-
-    def forward(self, x, y, x_masks, y_mask, tau):
-
-        alphas = self.prediction_layer(x, tau, x_masks)
-        x = self.routing_attention(x, x_masks=x_masks, orders=self.orders, alphas=alphas)
-        x = self.norm1(x + self.dropout1(x))
+    def forward(self, x, y, x_masks, y_mask, tau, training):
+        x = self.norm1(x + self.dropout1(
+            self.mhatt1(v=x, k=x, q=x, masks=x_masks, tau=tau, training=training)
+        ))
 
         x = self.norm2(x + self.dropout2(
             self.mhatt2(v=y, k=y, q=x, mask=y_mask)
@@ -334,21 +422,10 @@ class TRAR(nn.Module):
 
         return x
 
-    def routing_attention(self, x, x_masks, orders, alphas):
-        for i in range(orders):
-            temp_x = self.mhatt1(v=x, k=x, q=x, mask=x_masks[i])
-            if i == 0:
-                routing_x = temp_x.unsqueeze(1)
-            else:
-                routing_x = torch.cat((routing_x, temp_x.unsqueeze(1)), dim=1)
 
-        routing_x = torch.einsum("bl,bltc->btc", alphas, routing_x)
-        return routing_x
-
-
-# -------------------------------------------------------
-# ---- Encoder-Decoder with Transformer Routing Block----
-# -------------------------------------------------------
+# ----------------------------------------
+# ---- Encoder-Decoder with TRAR Block----
+# ----------------------------------------
 class TRAR_ED(nn.Module):
     def __init__(self, __C):
         super(TRAR_ED, self).__init__()
@@ -367,7 +444,7 @@ class TRAR_ED(nn.Module):
         # Input encoder last hidden vector
         # And obtain decoder last hidden vectors
         for dec in self.dec_list:
-            x = dec(x, y, x_masks, y_mask, self.tau)
+            x = dec(x, y, x_masks, y_mask, self.tau, self.training)
 
         return y, x
 

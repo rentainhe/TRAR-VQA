@@ -20,7 +20,6 @@ class PATH:
 
         self.DATA_PATH = {
             'vqa': self.DATA_ROOT + '/vqa',
-            'gqa': self.DATA_ROOT + '/gqa',
             'clevr': self.DATA_ROOT + '/clevr',
         }
 
@@ -30,10 +29,6 @@ class PATH:
                 'train': self.DATA_PATH['vqa'] + '/feats' + '/train2014',
                 'val': self.DATA_PATH['vqa'] + '/feats' + '/val2014',
                 'test': self.DATA_PATH['vqa'] + '/feats' + '/test2015',
-            },
-            'gqa': {
-                'default-frcn': self.DATA_PATH['gqa'] + '/feats' + '/gqa-frcn',
-                'default-grid': self.DATA_PATH['gqa'] + '/feats' + '/gqa-grid',
             },
             'clevr': {
                 'train': self.DATA_PATH['clevr'] + '/feats' + '/train',
@@ -53,16 +48,6 @@ class PATH:
                 'vg-anno': self.DATA_PATH['vqa'] + '/raw' + '/VG_annotations.json',
                 'test': self.DATA_PATH['vqa'] + '/raw' + '/v2_OpenEnded_mscoco_test2015_questions.json',
             },
-            'gqa': {
-                'train': self.DATA_PATH['gqa'] + '/raw' + '/questions1.2/train_balanced_questions.json',
-                'val': self.DATA_PATH['gqa'] + '/raw' + '/questions1.2/val_balanced_questions.json',
-                'testdev': self.DATA_PATH['gqa'] + '/raw' + '/questions1.2/testdev_balanced_questions.json',
-                'test': self.DATA_PATH['gqa'] + '/raw' + '/questions1.2/submission_all_questions.json',
-                'val_all': self.DATA_PATH['gqa'] + '/raw' + '/questions1.2/val_all_questions.json',
-                'testdev_all': self.DATA_PATH['gqa'] + '/raw' + '/questions1.2/testdev_all_questions.json',
-                'train_choices': self.DATA_PATH['gqa'] + '/raw' + '/eval/train_choices',
-                'val_choices': self.DATA_PATH['gqa'] + '/raw' + '/eval/val_choices.json',
-            },
             'clevr': {
                 'train': self.DATA_PATH['clevr'] + '/raw' + '/questions/CLEVR_train_questions.json',
                 'val': self.DATA_PATH['clevr'] + '/raw' + '/questions/CLEVR_val_questions.json',
@@ -75,11 +60,6 @@ class PATH:
             'vqa': {
                 'train': '',
                 'val': 'val',
-                'test': 'test',
-            },
-            'gqa': {
-                'train': '',
-                'val': 'testdev',
                 'test': 'test',
             },
             'clevr': {

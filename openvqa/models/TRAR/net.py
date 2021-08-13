@@ -1,7 +1,7 @@
 from openvqa.utils.make_mask import make_mask
 from openvqa.ops.fc import FC, MLP
 from openvqa.ops.layer_norm import LayerNorm
-from openvqa.models.TRAR.mca import TRAR_ED
+from openvqa.models.TRAR.trar import TRAR_ED
 from openvqa.models.TRAR.adapter import Adapter
 
 import torch.nn as nn

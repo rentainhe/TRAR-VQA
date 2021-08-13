@@ -57,9 +57,6 @@ class BaseAdapter(nn.Module):
         if self.__C.DATASET in ['vqa']:
             self.vqa_init(__C)
 
-        elif self.__C.DATASET in ['gqa']:
-            self.gqa_init(__C)
-
         elif self.__C.DATASET in ['clevr']:
             self.clevr_init(__C)
 
@@ -71,9 +68,6 @@ class BaseAdapter(nn.Module):
     def vqa_init(self, __C):
         raise NotImplementedError()
 
-    def gqa_init(self, __C):
-        raise NotImplementedError()
-
     def clevr_init(self, __C):
         raise NotImplementedError()
 
@@ -83,9 +77,6 @@ class BaseAdapter(nn.Module):
         if self.__C.DATASET in ['vqa']:
             return self.vqa_forward(feat_dict)
 
-        elif self.__C.DATASET in ['gqa']:
-            return self.gqa_forward(feat_dict)
-
         elif self.__C.DATASET in ['clevr']:
             return self.clevr_forward(feat_dict)
 
@@ -93,9 +84,6 @@ class BaseAdapter(nn.Module):
             exit(-1)
 
     def vqa_forward(self, feat_dict):
-        raise NotImplementedError()
-
-    def gqa_forward(self, feat_dict):
         raise NotImplementedError()
 
     def clevr_forward(self, feat_dict):

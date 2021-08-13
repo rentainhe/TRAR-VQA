@@ -33,10 +33,9 @@ def parse_args():
                       type=str, required=True)
 
     parser.add_argument('--DATASET', dest='DATASET',
-                      choices=['vqa', 'gqa', 'clevr'],
+                      choices=['vqa', 'clevr'],
                       help='{'
                            'vqa,'
-                           'gqa,'
                            'clevr,'
                            '}'
                         ,
@@ -46,7 +45,6 @@ def parse_args():
                       choices=['train', 'train+val', 'train+val+vg'],
                       help="set training split, "
                            "vqa: {'train', 'train+val', 'train+val+vg'}"
-                           "gqa: {'train', 'train+val'}"
                            "clevr: {'train', 'train+val'}"
                         ,
                       type=str)
