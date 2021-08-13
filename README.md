@@ -2,9 +2,19 @@
 This is an official implement for ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"](). It currently includes the code for training TRAR on VQA2.0
 
 ## Updates
-
+2021/8/13
+- The project page for TRAR is avaliable.
 
 ## Introduction
+**TRAR vs Standard Transformer**
+<p align="center">
+	<img src="misc/trar_block.png" width="550">
+</p>
+
+**TRAR Overall**
+<p align="center">
+	<img src="misc/trar_overall.png" width="550">
+</p>
 
 ## Usage
 ### Install
@@ -94,6 +104,10 @@ All the evaluations on the `test` dataset of VQA-v2 and CLEVR benchmarks can be 
 ```bash
 python3 run.py --RUN='test' --MODEL='trar' --DATASET='{vqa, clevr}' --CKPT_V=str --CKPT_E=int
 ```
+
+Result file are saved at:
+
+`results/result_test/result_run_<CKPT_V>_<CKPT_E>.json`
 
 
 ## Citing TRAR
