@@ -31,15 +31,7 @@ pip install -r requirements.txt
 ```
 
 ### Data preparation
-We provide two ways for pre-processing the data
-#### 1. Download VQA2.0 Dataset from Official repo
-- Download Extracted Features
-```bash
-wget https://dl.fbaipublicfiles.com/grid-feats-vqa/X-152/X-152-features.tgz
-```
-We use Grid-Features extracted by the pretrained ResNext152 Model based on [grid-feats-vqa](https://github.com/facebookresearch/grid-feats-vqa)
-
-- 
+see [DATA.md]()
 
 
 ## Main Results on VQA2.0 and CLEVR dataset
