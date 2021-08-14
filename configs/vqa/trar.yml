@@ -18,7 +18,7 @@ ROUTING_MODE: 'attention' # 'attention' or 'avg'
 TAU_POLICY: 1 # SLOW 0, FAST 1, FINETUNE 2
 TAU_MAX: 10
 TAU_MIN: 0.1
-BINARIZE: False
+BINARIZE: True
 
 # Execution
 BATCH_SIZE: 64

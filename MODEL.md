@@ -13,9 +13,9 @@ We provide three groups of results (including the accuracies of Overall, Yes/No,
 ### Train -> Val
 **TRAR Config File:** [trar.yml](configs/vqa/trar.yml)
 
-**Note that the `BINARIZE` will not influence the training, it just change the evaluate behavior in TRAR, so the `BINARIZE=True` and `BINARIZE=False` share the same weight.**
+**Note that the `BINARIZE` will not influence the training, it only changes the evaluate behavior in TRAR, so the `BINARIZE=True` and `BINARIZE=False` share the same weight.**
 
-| Model    | Base lr | ORDERS      | ROUTING    | ROUTING_MODE| POLICY    | BINARIZE |Overall (%) | Yes/No (%) | Number (%) | Other (%) | Download |
-|:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:---------:|
-| **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | False    |  67.61     | 85.22      | 49.66      | 58.97     |           |
-| **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | False    |  67.61     | 85.22      | 49.66      | 58.97     |           |
+| Model    | Base lr | ORDERS      | ROUTING    | ROUTING_MODE| POLICY    | BINARIZE |Overall (%) | Yes/No (%) | Number (%) | Other (%) | Download             |
+|:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |
+| **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | False    |  67.61     | 85.22      | 49.66      | 58.97     | [model]() \| [log]() |
+| **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | False    |  67.61     | 85.22      | 49.66      | 58.97     |          -           |
