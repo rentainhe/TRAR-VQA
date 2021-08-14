@@ -30,7 +30,7 @@ If you want to train TRAR on `16 × 16` features, you can extract the features b
 
 clone **our own extension** of grid-feats-vqa repo:
 ```bash
-git clone https://github.com/rentainhe/grid-feats-vqa.git
+$ git clone https://github.com/rentainhe/grid-feats-vqa.git
 ```
 and check the following tutorial [TRAR_FEATURE_EXTRACTION](https://github.com/rentainhe/grid-feats-vqa/blob/master/TRAR_FEATURE_EXTRACTION.md). 
 
@@ -111,4 +111,13 @@ All the processed feature files should be placed in `data/clevr/feats` folder as
 	|  |  |-- test
 	|  |  |  |-- 1.npz
 	|  |  |  |-- ...
+```
+
+
+### FQAs
+**Q:** When running `clevr_extract_feat.py` comes up `ImportError: cannot import name 'imread'`
+**A:** Make sure you have already install `Pillow` first. If it still not work, you should use a lower version of `scipy`.
+```bash
+$ pip install Pillow
+$ pip install scipy==1.2.1
 ```

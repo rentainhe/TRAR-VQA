@@ -8,7 +8,7 @@
 Command line example:
 python clevr_extract_feat.py --mode=all --gpu=0
 
-python clevr_extract_feat.py --mode=train --gpu=0 --model=resnet101 --model_stage=3 --batch_size=128 --image_height=224 --image_width=224
+python clevr_extract_feat.py --mode=train --gpu=0 --model=resnet101 --model_stage=3 --batch_size=64 --image_height=224 --image_width=224
 '''
 
 import argparse, os, json
@@ -109,16 +109,16 @@ parser.add_argument('--gpu', '-gpu', default='0', type=str)
 
 parser.add_argument('--model', '-model', default='resnet101')
 parser.add_argument('--model_stage', '-model_stage', default=3, type=int)
-parser.add_argument('--batch_size', '-batch_size', default=128, type=int)
+parser.add_argument('--batch_size', '-batch_size', default=64, type=int)
 
 parser.add_argument('--image_height', '-image_height', default=224, type=int)
 parser.add_argument('--image_width', '-image_width', default=224, type=int)
 
 
 if __name__ == '__main__':
-    train_images_path = './raws/images/train/'
-    val_images_path = './raws/images/val/'
-    test_images_path = './raws/images/test/'
+    train_images_path = './raw/images/train/'
+    val_images_path = './raw/images/val/'
+    test_images_path = './raw/images/test/'
     train_feats_npz_path = './feats/train/'
     val_feats_npz_path = './feats/val/'
     test_feats_npz_path = './feats/test/'
