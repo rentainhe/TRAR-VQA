@@ -152,7 +152,7 @@ def train_engine(__C, dataset, dataset_eval=None):
                     set_training_tau(__C, net, tau)
             # Finetune
             elif __C.TAU_POLICY == 2:
-                if epoch < __C.MAX_EPOCH - 1:
+                if epoch < __C.WARMUP_EPOCH - 1:
                     tau = 1.0 - (epoch - 13) / 4
                     set_training_tau(__C, net, tau)
                 else:
