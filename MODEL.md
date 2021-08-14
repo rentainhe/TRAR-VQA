@@ -17,5 +17,5 @@ We provide three groups of results (including the accuracies of Overall, Yes/No,
 
 | Model    | Base lr | ORDERS      | ROUTING    | ROUTING_MODE| POLICY    | BINARIZE |Overall (%) | Yes/No (%) | Number (%) | Other (%) | Download             |
 |:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |
-| **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | False    |  67.61     | 85.22      | 49.66      | 58.97     | [model]() \| [log]() |
-| **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | False    |  67.61     | 85.22      | 49.66      | 58.97     |          -           |
+| **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | False    |  67.61     | 85.22      | 49.66      | 58.97     | [model](https://1drv.ms/f/s!Ary9y5k2nMUxhUNnPf0VnhX-eDW5) \| [log](https://1drv.ms/f/s!Ary9y5k2nMUxhUNnPf0VnhX-eDW5) |
+| **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | True     |  67.62     | 85.19      | 49.75      | 58.98     |           -          |
