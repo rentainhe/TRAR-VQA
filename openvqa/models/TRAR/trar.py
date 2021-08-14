@@ -272,9 +272,10 @@ class SARoutingBlock(nn.Module):
         x = v
 
         alphas = self.routing_block(x, tau, masks)
-
-        if not training:
-            alphas = self.argmax_binarize(alphas)
+        
+        if self.__C.BINARIZE:
+            if not training:
+                alphas = self.argmax_binarize(alphas)
 
         v = self.linear_v(v).view(
             n_batches,

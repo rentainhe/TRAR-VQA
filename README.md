@@ -61,6 +61,7 @@ ROUTING_MODE: 'attention' # {'attention', 'avg'}
 TAU_POLICY: 1 # {0: 'SLOW', 1: 'FAST', 2: 'FINETUNE'}
 TAU_MAX: 10
 TAU_MIN: 0.1
+BINARIZE: False
 ```
 - `ORDERS=list`, to set the local attention window size for routing.`0` for global attention.
 - `IMG_SCALE=int`, which should be equal to the `image feature size` used for training. You should set `IMG_SCALE: 16` for `16 × 16` training features.
@@ -69,6 +70,7 @@ TAU_MIN: 0.1
 - `TAU_POLICY={0, 1, 2}`, to set the `temperature schedule` in training TRAR when using `ROUTING: 'hard'`.
 - `TAU_MAX=int`, to set the maximum temperature in training.
 - `TAU_MIN=int`, to set the minimum temperature in training.
+- `BINARIZE=bool`, binarize the predicted alphas (alphas: the prob of choosing one path), which means only keep the maximum alpha and set others to zero. If `BINARIZE=False`, it will keep all of the alphas and get a weight sum of different routing predict result by alphas.
 
 **`TAU_POLICY` visualization**
 
