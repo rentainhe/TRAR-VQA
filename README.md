@@ -1,4 +1,4 @@
-# TRAR-VQA
+# TRAnsformer Routing Networks (TRAR)
 This is an official implement for ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"](). It currently includes the code for training TRAR on VQA2.0. We built our TRAR project based on [openvqa](https://github.com/MILVLG/openvqa). Our TRAR model for REC task is coming soon.
 
 ## Updates
@@ -22,6 +22,7 @@ This is an official implement for ICCV 2021 paper ["TRAR: Routing the Attention 
 2. [Config Introduction](#Config-Introduction)
 3. [Training](#Training)
 4. [Validation and Testing](#Validation-and-Testing)
+5. [Models](#Models)
 
 ### Installation
 - Clone this repo
@@ -49,7 +50,7 @@ pip install en_vectors_web_lg-2.1.0.tar.gz
 ```
 
 ### Dataset setup
-see [DATA.md](https://github.com/rentainhe/TRAR-VQA/blob/main/DATA.md)
+see [DATA.md](DATA.md)
 
 ### Config Introduction
 In [trar.yml]("configs/vqa/trar.yml) config we have these specific settings for `TRAR` model
@@ -70,7 +71,7 @@ BINARIZE: False
 - `TAU_POLICY={0, 1, 2}`, to set the `temperature schedule` in training TRAR when using `ROUTING: 'hard'`.
 - `TAU_MAX=int`, to set the maximum temperature in training.
 - `TAU_MIN=int`, to set the minimum temperature in training.
-- `BINARIZE=bool`, binarize the predicted alphas (alphas: the prob of choosing one path), which means only keep the maximum alpha and set others to zero. If `BINARIZE=False`, it will keep all of the alphas and get a weight sum of different routing predict result by alphas.
+- `BINARIZE=bool`, binarize the predicted alphas (alphas: the prob of choosing one path), which means **during test time**, we only keep the maximum alpha and set others to zero. If `BINARIZE=False`, it will keep all of the alphas and get a weight sum of different routing predict result by alphas. **It won't influence the training**
 
 **`TAU_POLICY` visualization**
 
@@ -142,6 +143,9 @@ python3 run.py --RUN='test' --MODEL='trar' --DATASET='{vqa, clevr}' --CKPT_V=str
 Result file are saved at:
 
 `results/result_test/result_run_<CKPT_V>_<CKPT_E>.json`
+
+### Models
+Here we provide our pretrained model and log, please see [MODEL.md](MODEL.md)
 
 ## Acknowledgements
 - [openvqa](https://github.com/MILVLG/openvqa)
