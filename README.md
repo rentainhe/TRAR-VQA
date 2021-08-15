@@ -147,6 +147,8 @@ Result file are saved at:
 
 `results/result_test/result_run_<CKPT_V>_<CKPT_E>.json`
 
+You can upload the obtained result json file to [Eval AI](https://evalai.cloudcv.org/web/challenges/challenge-page/163/overview) to evaluate the scores.
+
 ### Models
 Here we provide our pretrained model and log, please see [MODEL.md](MODEL.md)
 
@@ -155,4 +157,4 @@ Here we provide our pretrained model and log, please see [MODEL.md](MODEL.md)
 - [grid-feats-vqa](https://github.com/facebookresearch/grid-feats-vqa)
 
 ## Citation
-
+if this repository is helpful for your research, we'd really appreciate it if you could cite the following paper:
