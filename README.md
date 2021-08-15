@@ -73,6 +73,8 @@ BINARIZE: False
 - `TAU_MIN=float`, to set the minimum temperature in training.
 - `BINARIZE=bool`, binarize the predicted alphas (alphas: the prob of choosing one path), which means **during test time**, we only keep the maximum alpha and set others to zero. If `BINARIZE=False`, it will keep all of the alphas and get a weight sum of different routing predict result by alphas. **It won't influence the training time, just a small difference during test time**.
 
+**Note that please set `BINARIZE=False` when `ROUTING='soft'`, it's no need to binarize the path prob in soft routing block.**
+
 **`TAU_POLICY` visualization**
 
 For `MAX_EPOCH=13` with `WARMUP_EPOCH=3` we have the following policy strategy:
@@ -97,6 +99,7 @@ Args:
 
 
 **Resume Training**
+
 Resume training from specific saved model weights
 ```bash
 python3 run.py --RUN='train' --DATASET='vqa' --MODEL='trar' --RESUME=True --CKPT_V=str --CKPT_E=int
