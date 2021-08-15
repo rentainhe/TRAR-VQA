@@ -2,7 +2,7 @@
 This is an official implement for ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"](). It currently includes the code for training TRAR on VQA2.0. We built our TRAR project based on [openvqa](https://github.com/MILVLG/openvqa). Our TRAR model for REC task is coming soon.
 
 ## Updates
-- (2021/8/14) Release our pretrained weight on `train` split. See [MODEL.md](MODEL.md).
+- (2021/8/14) Release our pretrained weight on `train` split. Please check our model page [MODEL.md](MODEL.md).
 - (2021/8/13) The project page for TRAR is avaliable.
 
 ## Introduction
@@ -42,7 +42,7 @@ conda activate trar
 ```bash
 conda install pytorch==1.7.1 torchvision==0.8.2 cudatoolkit=10.1 -c pytorch
 ```
-- Install [Spacy](https://spacy.io/) and initialize the [GloVe]() as follows:
+- Install [Spacy](https://spacy.io/) and initialize the [GloVe](https://github-releases.githubusercontent.com/84940268/9f4d5680-4fed-11e9-9dd2-988cce16be55?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20210815%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210815T072922Z&X-Amz-Expires=300&X-Amz-Signature=1bd1bd4fc52057d8ac9eec7720e3dd333e63c234abead471c2df720fb8f04597&X-Amz-SignedHeaders=host&actor_id=48727989&key_id=0&repo_id=84940268&response-content-disposition=attachment%3B%20filename%3Den_vectors_web_lg-2.1.0.tar.gz&response-content-type=application%2Foctet-stream) as follows:
 ```bash
 pip install -r requirements.txt
 wget https://github.com/explosion/spacy-models/releases/download/en_vectors_web_lg-2.1.0/en_vectors_web_lg-2.1.0.tar.gz -O en_vectors_web_lg-2.1.0.tar.gz
@@ -69,9 +69,9 @@ BINARIZE: False
 - `ROUTING={'hard', 'soft'}`, to set the `Routing Block Type` in TRAR model.
 - `ROUTING_MODE={'attention', 'avg'}`, to set the `Downsample Strategy` used in `Routing Block`.
 - `TAU_POLICY={0, 1, 2}`, to set the `temperature schedule` in training TRAR when using `ROUTING: 'hard'`.
-- `TAU_MAX=int`, to set the maximum temperature in training.
-- `TAU_MIN=int`, to set the minimum temperature in training.
-- `BINARIZE=bool`, binarize the predicted alphas (alphas: the prob of choosing one path), which means **during test time**, we only keep the maximum alpha and set others to zero. If `BINARIZE=False`, it will keep all of the alphas and get a weight sum of different routing predict result by alphas. **It won't influence the training**
+- `TAU_MAX=float`, to set the maximum temperature in training.
+- `TAU_MIN=float`, to set the minimum temperature in training.
+- `BINARIZE=bool`, binarize the predicted alphas (alphas: the prob of choosing one path), which means **during test time**, we only keep the maximum alpha and set others to zero. If `BINARIZE=False`, it will keep all of the alphas and get a weight sum of different routing predict result by alphas. **It won't influence the training time, just a small difference during test time**.
 
 **`TAU_POLICY` visualization**
 
