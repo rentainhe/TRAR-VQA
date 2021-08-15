@@ -19,6 +19,8 @@ We provide three groups of results (including the accuracies of Overall, Yes/No,
 |:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | False    |  67.61     | 85.22      | 49.66      | 58.97     | [model](https://1drv.ms/f/s!Ary9y5k2nMUxhUNnPf0VnhX-eDW5) \| [log](https://1drv.ms/f/s!Ary9y5k2nMUxhUNnPf0VnhX-eDW5) |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | True     | **67.62**  | 85.19      | 49.75      | 58.98     |           -          |
+| **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | avg         | 1         | False    | 67.59      | 85.31      | 49.85      | 58.81     | [model](https://1drv.ms/f/s!Ary9y5k2nMUxhUnK6V5D_QrERNYH) \| [log](https://1drv.ms/f/s!Ary9y5k2nMUxhUnK6V5D_QrERNYH) |
+| **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | avg         | 1         | True     | 67.58      | 85.30      | 49.51      | 58.78     |           -          |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | attention         | -         | False     |  -     | -      | -      | -     |      [model]() \| [log]()          |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | attention         | -         | True     |  -     | -      | -      | -     |           -          |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | avg         | -         | False     | **67.62**  | 85.36      | 49.89      | 58.83     |    [model](https://1drv.ms/f/s!Ary9y5k2nMUxhUbSCRX7m_4mZnlA) \| [log](https://1drv.ms/f/s!Ary9y5k2nMUxhUbSCRX7m_4mZnlA)          |
@@ -39,7 +41,7 @@ ROUTING_MODE: 'attention'
 BINARIZE: False
 ...
 ```
-3. Run the following scripts:
+4. Run the following scripts:
 ```bash
 $ cd TRAR-VQA
 $ python3 run.py --DATASET vqa --MODEL trar --RUN val --CKPT_PATH /path/to/epoch13.pkl
