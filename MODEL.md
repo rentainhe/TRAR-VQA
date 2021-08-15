@@ -27,6 +27,7 @@ We provide three groups of results (including the accuracies of Overall, Yes/No,
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | avg         | -         | True     |  67.52     | 85.25      | 49.65      | 58.76     |           -          |
 
 **Eval Example:**
+
 For validating `TRAR` model pretrained weights under `ORDERS=[0, 1, 2, 3]`, `ROUTING='hard'`, `ROUTING_MODE='attention'`, `BINARIZE=False`:
 1. Download the pretrained weight here: [model](https://1drv.ms/f/s!Ary9y5k2nMUxhUNnPf0VnhX-eDW5).
 2. Place the weight `epoch13.pkl` in any folder you like
@@ -46,4 +47,4 @@ BINARIZE: False
 $ cd TRAR-VQA
 $ python3 run.py --DATASET vqa --MODEL trar --RUN val --CKPT_PATH /path/to/epoch13.pkl
 ```
-**Note that you should make sure the hyper-parameters in [trar.yml](configs/vqa/trar.yml) are as the same as the pretrained model weight. You can check the hyper-parameters in the downloaded log file.**
+**Note that you should make sure the hyper-parameters in [trar.yml](configs/vqa/trar.yml) are as the same as the pretrained model weight. You can check the hyper-parameters in the downloaded log file for more details.**
