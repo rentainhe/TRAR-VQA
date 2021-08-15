@@ -116,6 +116,7 @@ All the processed feature files should be placed in `data/clevr/feats` folder as
 
 ### FQAs
 **Q:** When running `clevr_extract_feat.py` comes up `ImportError: cannot import name 'imread'`
+
 **A:** Make sure you have already install `Pillow` first. If it still not work, you should use a lower version of `scipy`.
 ```bash
 $ pip install Pillow

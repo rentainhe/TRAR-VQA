@@ -53,7 +53,7 @@ pip install en_vectors_web_lg-2.1.0.tar.gz
 see [DATA.md](DATA.md)
 
 ### Config Introduction
-In [trar.yml]("configs/vqa/trar.yml) config we have these specific settings for `TRAR` model
+In [trar.yml](configs/vqa/trar.yml) config we have these specific settings for `TRAR` model
 ```
 ORDERS: [0, 1, 2, 3]
 IMG_SCALE: 8 
