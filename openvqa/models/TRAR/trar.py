@@ -98,13 +98,13 @@ def getMasks(x_mask, __C):
 # Routing weight prediction layer
 # Weight obtained by softmax or gumbel softmax
 class SoftRoutingBlock(nn.Module):
-    def __init__(self, in_channel, out_channel, mode='attention', reduction=2):
+    def __init__(self, in_channel, out_channel, pooling='attention', reduction=2):
         super(SoftRoutingBlock, self).__init__()
-        self.mode = mode
+        self.pooling = pooling
 
-        if mode == 'attention':
+        if pooling == 'attention':
             self.pool = AttFlat(in_channel)
-        elif mode == 'avg':
+        elif pooling == 'avg':
             self.pool = nn.AdaptiveAvgPool1d(1)
 
         self.mlp = nn.Sequential(
@@ -114,10 +114,10 @@ class SoftRoutingBlock(nn.Module):
         )
 
     def forward(self, x, tau, masks):
-        if self.mode == 'attention':
+        if self.pooling == 'attention':
             x = self.pool(x, x_mask=self.make_mask(x))
             logits = self.mlp(x.squeeze(-1))
-        elif self.mode == 'avg':
+        elif self.pooling == 'avg':
             x = x.transpose(1, 2)
             x = self.pool(x)
             logits = self.mlp(x.squeeze(-1))
@@ -133,13 +133,13 @@ class SoftRoutingBlock(nn.Module):
 
 
 class HardRoutingBlock(nn.Module):
-    def __init__(self, in_channel, out_channel, mode='attention', reduction=2):
+    def __init__(self, in_channel, out_channel, pooling='attention', reduction=2):
         super(HardRoutingBlock, self).__init__()
-        self.mode = mode
+        self.pooling = pooling
 
-        if mode == 'attention':
+        if pooling == 'attention':
             self.pool = AttFlat(in_channel)
-        elif mode == 'avg':
+        elif pooling == 'avg':
             self.pool = nn.AdaptiveAvgPool1d(1)
 
         self.mlp = nn.Sequential(
@@ -149,10 +149,10 @@ class HardRoutingBlock(nn.Module):
         )
 
     def forward(self, x, tau, masks):
-        if self.mode == 'attention':
+        if self.pooling == 'attention':
             x = self.pool(x, x_mask=self.make_mask(x))
             logits = self.mlp(x.squeeze(-1))
-        elif self.mode == 'avg':
+        elif self.pooling == 'avg':
             x = x.transpose(1, 2)
             x = self.pool(x)
             logits = self.mlp(x.squeeze(-1))
@@ -261,9 +261,9 @@ class SARoutingBlock(nn.Module):
         self.linear_q = nn.Linear(__C.HIDDEN_SIZE, __C.HIDDEN_SIZE)
         self.linear_merge = nn.Linear(__C.HIDDEN_SIZE, __C.HIDDEN_SIZE)
         if __C.ROUTING == 'hard':
-            self.routing_block = HardRoutingBlock(__C.HIDDEN_SIZE, len(__C.ORDERS), __C.ROUTING_MODE)
+            self.routing_block = HardRoutingBlock(__C.HIDDEN_SIZE, len(__C.ORDERS), __C.POOLING)
         elif __C.ROUTING == 'soft':
-            self.routing_block = SoftRoutingBlock(__C.HIDDEN_SIZE, len(__C.ORDERS), __C.ROUTING_MODE)
+            self.routing_block = SoftRoutingBlock(__C.HIDDEN_SIZE, len(__C.ORDERS), __C.POOLING)
 
         self.dropout = nn.Dropout(__C.DROPOUT_R)
 

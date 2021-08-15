@@ -58,7 +58,7 @@ In [trar.yml]("configs/vqa/trar.yml) config we have these specific settings for 
 ORDERS: [0, 1, 2, 3]
 IMG_SCALE: 8 
 ROUTING: 'hard' # {'soft', 'hard'}
-ROUTING_MODE: 'attention' # {'attention', 'avg'}
+POOLING: 'attention' # {'attention', 'avg'}
 TAU_POLICY: 1 # {0: 'SLOW', 1: 'FAST', 2: 'FINETUNE'}
 TAU_MAX: 10
 TAU_MIN: 0.1
@@ -67,7 +67,7 @@ BINARIZE: False
 - `ORDERS=list`, to set the local attention window size for routing.`0` for global attention.
 - `IMG_SCALE=int`, which should be equal to the `image feature size` used for training. You should set `IMG_SCALE: 16` for `16 × 16` training features.
 - `ROUTING={'hard', 'soft'}`, to set the `Routing Block Type` in TRAR model.
-- `ROUTING_MODE={'attention', 'avg'}`, to set the `Downsample Strategy` used in `Routing Block`.
+- `POOLING={'attention', 'avg'}`, to set the `Downsample Strategy` used in `Routing Block`.
 - `TAU_POLICY={0, 1, 2}`, to set the `temperature schedule` in training TRAR when using `ROUTING: 'hard'`.
 - `TAU_MAX=float`, to set the maximum temperature in training.
 - `TAU_MIN=float`, to set the minimum temperature in training.

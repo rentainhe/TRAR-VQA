@@ -13,7 +13,7 @@ FLAT_OUT_SIZE: 1024
 ORDERS: [0, 1, 2, 3]
 IMG_SCALE: 14
 ROUTING: 'hard' # 'soft' or 'hard'
-ROUTING_MODE: 'attention' # 'attention' or 'avg'
+POOLING: 'attention' # 'attention' or 'avg'
 TAU_POLICY: 1 # SLOW 0, FAST 1, FINETUNE 2
 TAU_MAX: 10
 TAU_MIN: 0.1

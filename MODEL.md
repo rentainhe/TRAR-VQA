@@ -13,22 +13,20 @@ We provide three groups of results (including the accuracies of Overall, Yes/No,
 ### Train -> Val
 **TRAR Config File:** [trar.yml](configs/vqa/trar.yml)
 
-**Note that the `BINARIZE` will not influence the training, it only changes the evaluate behavior in TRAR, so the `BINARIZE=True` and `BINARIZE=False` share the same weight. And `POLICY` is deprecated when `ROUTING='soft'`.**
+**Note that the `BINARIZE` will not influence the training, it only changes the evaluate behavior in TRAR when using `ROUTING='hard'`, so the `BINARIZE=True` and `BINARIZE=False` share the same weight. And `POLICY` and `BINARIZE` is deprecated when `ROUTING='soft'`.**
 
-| Model    | Base lr | ORDERS      | ROUTING    | ROUTING_MODE| POLICY    | BINARIZE |Overall (%) | Yes/No (%) | Number (%) | Other (%) | Download             |
+| Model    | Base lr | ORDERS      | ROUTING    | POOLING     | POLICY    | BINARIZE |Overall (%) | Yes/No (%) | Number (%) | Other (%) | Download             |
 |:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | False    |  67.61     | 85.22      | 49.66      | 58.97     | [model](https://1drv.ms/f/s!Ary9y5k2nMUxhUNnPf0VnhX-eDW5) \| [log](https://1drv.ms/f/s!Ary9y5k2nMUxhUNnPf0VnhX-eDW5) |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | True     | **67.62**  | 85.19      | 49.75      | 58.98     |           -          |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | avg         | 1         | False    | 67.59      | 85.31      | 49.85      | 58.81     | [model](https://1drv.ms/f/s!Ary9y5k2nMUxhUnK6V5D_QrERNYH) \| [log](https://1drv.ms/f/s!Ary9y5k2nMUxhUnK6V5D_QrERNYH) |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | avg         | 1         | True     | 67.58      | 85.30      | 49.51      | 58.78     |           -          |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | attention         | -         | False     |  -     | -      | -      | -     |      [model]() \| [log]()          |
-| **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | attention         | -         | True     |  -     | -      | -      | -     |           -          |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | avg         | -         | False     | **67.62**  | 85.36      | 49.89      | 58.83     |    [model](https://1drv.ms/f/s!Ary9y5k2nMUxhUbSCRX7m_4mZnlA) \| [log](https://1drv.ms/f/s!Ary9y5k2nMUxhUbSCRX7m_4mZnlA)          |
-| **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | avg         | -         | True     |  67.52     | 85.25      | 49.65      | 58.76     |           -          |
 
 **Eval Example:**
 
-For validating `TRAR` model pretrained weights under `ORDERS=[0, 1, 2, 3]`, `ROUTING='hard'`, `ROUTING_MODE='attention'`, `BINARIZE=False`:
+For validating `TRAR` model pretrained weights under `ORDERS=[0, 1, 2, 3]`, `ROUTING='hard'`, `POOLING='attention'`, `BINARIZE=False`:
 1. Download the pretrained weight here: [model](https://1drv.ms/f/s!Ary9y5k2nMUxhUNnPf0VnhX-eDW5).
 2. Place the weight `epoch13.pkl` in any folder you like
 3. Check the [trar.yml](configs/vqa/trar.yml) config file:
@@ -37,7 +35,7 @@ For validating `TRAR` model pretrained weights under `ORDERS=[0, 1, 2, 3]`, `ROU
 ORDERS: [0, 1, 2, 3]
 IMG_SCALE: 8
 ROUTING: 'hard' 
-ROUTING_MODE: 'attention'
+POOLING: 'attention'
 ...
 BINARIZE: False
 ...
