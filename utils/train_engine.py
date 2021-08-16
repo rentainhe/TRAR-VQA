@@ -145,15 +145,15 @@ def train_engine(__C, dataset, dataset_eval=None):
             # Fast
             elif __C.TAU_POLICY == 1:
                 if epoch < __C.WARMUP_EPOCH:
-                    tau = __C.TAU_MAX - (__C.TAU_MAX - 1) * epoch / 3
+                    tau = __C.TAU_MAX - (__C.TAU_MAX - 1) * epoch / __C.WARMUP_EPOCH
                     set_training_tau(__C, net, tau)
                 else:
-                    tau = 1.0 - (epoch - 3) / 10
+                    tau = 1.0 - (epoch - __C.WARMUP_EPOCH) / (__C.MAX_EPOCH - __C.WARMUP_EPOCH)
                     set_training_tau(__C, net, tau)
             # Finetune
             elif __C.TAU_POLICY == 2:
                 if epoch < __C.WARMUP_EPOCH:
-                    tau = 1.0 - (epoch - 13) / 4
+                    tau = 1.0 - (epoch - __C.MAX_EPOCH) / (__C.WARMUP_EPOCH + 1)
                     set_training_tau(__C, net, tau)
                 else:
                     tau = 0.1
