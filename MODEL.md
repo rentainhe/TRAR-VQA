@@ -39,7 +39,7 @@ We provide three groups of results (including the accuracies of Overall, Yes/No,
 **Pretrained Model on `8 * 8` Size Train Set**
 | Model    | Base lr | ORDERS      | ROUTING    | POOLING     | POLICY    | BINARIZE |Overall (%) | Yes/No (%) | Number (%) | Other (%) | Download             |
 |:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |
-| **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | avg         | -         | False    | **72.01**  | 87.52      | 55.06      | 62.59     | [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhVX_aC1pEN4HAzTB) \| [BaiduYun](https://pan.baidu.com/s/1nCjnM_-jzUdJMJ94q3rlqg) `code:kwvv` |
+| **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | avg         | -         | False    | **72.01**  | 87.52      | 55.06      | 62.59     | [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhVX_aC1pEN4HAzTB) \| [BaiduYun](https://pan.baidu.com/s/1qifEjmaz7xYylWTyfv0lBQ) `code:wmhj` |
 
 ### Eval Example on VQA2.0
 
@@ -63,3 +63,24 @@ $ cd TRAR-VQA
 $ python3 run.py --DATASET vqa --MODEL trar --RUN val --CKPT_PATH /path/to/epoch13.pkl
 ```
 **Note that you should make sure the hyper-parameters in [trar.yml](configs/vqa/trar.yml) are as the same as the pretrained model weight. You can check the hyper-parameters in the downloaded log file for more details.**
+
+### Test Example on VQA2.0
+For testing `TRAR` model pretrained on `train+val+vg` split under `ORDERS=[0, 1, 2, 3]`, `ROUTING='soft'`, `POOLING='avg'`, `BINARIZE=False`:
+1. Download the pretrained weight here: [model](https://1drv.ms/f/s!Ary9y5k2nMUxhVX_aC1pEN4HAzTB).
+2. Place the weight `epoch13.pkl` in any folder you like
+3. Check the [trar.yml](configs/vqa/trar.yml) config file:
+```
+...
+ORDERS: [0, 1, 2, 3]
+IMG_SCALE: 8
+ROUTING: 'soft' 
+POOLING: 'avg'
+...
+BINARIZE: False
+...
+```
+4. Run the following scripts:
+```bash
+$ cd TRAR-VQA
+$ python3 run.py --DATASET vqa --MODEL trar --RUN test --CKPT_PATH /path/to/epoch13.pkl
+```
