@@ -24,9 +24,17 @@ We provide three groups of results (including the accuracies of Overall, Yes/No,
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | attention   | -         | False    | 67.45      | 85.03      | 49.80      | 58.75     |           -          |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | avg         | -         | False    | **67.62**  | 85.36      | 49.89      | 58.83     | [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhUbSCRX7m_4mZnlA) \| [BaiduYun](https://pan.baidu.com/s/1X2rCIAJiyQXRuZysaNRNwg) `code:fhgu` |
 
-**Eval Example:**
 
-For validating `TRAR` model pretrained weights under `ORDERS=[0, 1, 2, 3]`, `ROUTING='hard'`, `POOLING='attention'`, `BINARIZE=False`:
+### Train+val -> Test-dev
+**We've observed that TRAR with `ROUTING='soft'`, `POOLING='avg'`, `BINARIZE=False` is a bit more stable. So We trained our model on split `train+val` under these settings**
+
+| Model    | Base lr | ORDERS      | ROUTING    | POOLING     | POLICY    | BINARIZE |Overall (%) | Yes/No (%) | Number (%) | Other (%) | Download             |
+|:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |
+| **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | avg         | -         | False    | **71.21**  | 85.35      | 53.13      | 61.53     | [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhVX_aC1pEN4HAzTB) \| [BaiduYun](https://pan.baidu.com/s/1nCjnM_-jzUdJMJ94q3rlqg) `code:kwvv` |
+
+### Eval Example
+
+For validating `TRAR` model pretrained on `train` split under `ORDERS=[0, 1, 2, 3]`, `ROUTING='hard'`, `POOLING='attention'`, `BINARIZE=False`:
 1. Download the pretrained weight here: [model](https://1drv.ms/f/s!Ary9y5k2nMUxhUNnPf0VnhX-eDW5).
 2. Place the weight `epoch13.pkl` in any folder you like
 3. Check the [trar.yml](configs/vqa/trar.yml) config file:

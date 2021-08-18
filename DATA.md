@@ -6,7 +6,7 @@ you should prepare the following datasets before running the experiments
 ### VQA-v2
 - Image Features
 
-We use `Grid-Features` extracted by the pretrained `ResNext152` model based on [grid-feats-vqa](), with each image being represented as an dynamic number (maximum number equals to 608) of 2048-D features. We first padded each feature into `32 × 32` scale and then pooled it by a kernel size of `2 × 2` with a stride of `2` to get our `16 × 16` feature. We did the same pooling operation to get the smaller feature with scale of `8 × 8`. We save the features for each image as a `.npy` file. **We only provide our extracted `8 × 8` features here, you can download the extracted features from [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhVGP9crDwW-97LrF) or [BaiduYun](https://pan.baidu.com/s/1GJL_yn6rJGFXypVbNR5e-g) with code `igr6`** The downloaded files containes three files: **train2014.zip, val2014.zip, and test2015.zip**, corresponding to the features of the `train/val/test` images for VQA-v2, respectively
+We use `Grid-Features` extracted by the pretrained `ResNext152` model based on [grid-feats-vqa](), with each image being represented as an dynamic number (maximum number equals to 608) of 2048-D features. We first padded each feature into `32 × 32` scale and then pooled it by a kernel size of `2 × 2` with a stride of `2` to get our `16 × 16` feature. We did the same pooling operation to get the smaller feature with scale of `8 × 8`. We save the features for each image as a `.npy` file. **We only provide our extracted `8 × 8` features here, you can download the extracted features from [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhVGP9crDwW-97LrF) or [BaiduYun](https://pan.baidu.com/s/1GJL_yn6rJGFXypVbNR5e-g) with code `igr6`** The downloaded files containes three files: **train2014.zip, val2014.zip, and test2015.zip**, corresponding to the features of the `train/val/test` images for VQA-v2, respectively.
 
 All the image features file should be unzipped to `data/vqa/feats` folder as the following data structure:
 
@@ -28,11 +28,11 @@ All the image features file should be unzipped to `data/vqa/feats` folder as the
 **Extract Feature By Yourself**
 If you want to train TRAR on `16 × 16` features, you can extract the features by yourself following these steps: 
 
-clone **our own extension** of grid-feats-vqa repo:
+clone **our own extension** of `grid-feats-vqa` repo:
 ```bash
-$ git clone https://github.com/rentainhe/grid-feats-vqa.git
+$ git clone https://github.com/rentainhe/TRAR-Feature-Extraction.git
 ```
-and check the following tutorial [TRAR_FEATURE_EXTRACTION](https://github.com/rentainhe/grid-feats-vqa/blob/master/TRAR_FEATURE_EXTRACTION.md). 
+and check the following tutorial [TRAR_Feature_Extraction](https://github.com/rentainhe/TRAR-Feature-Extraction/blob/master/TRAR_FEATURE_EXTRACTION.md) for more details. 
 
 - QA Annotations
 
