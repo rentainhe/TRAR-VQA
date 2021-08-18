@@ -32,7 +32,7 @@ We provide three groups of results (including the accuracies of Overall, Yes/No,
 |:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | avg         | -         | False    | **71.21**  | 85.35      | 53.13      | 61.53     | [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhVX_aC1pEN4HAzTB) \| [BaiduYun](https://pan.baidu.com/s/1nCjnM_-jzUdJMJ94q3rlqg) `code:kwvv` |
 
-### Eval Example
+### Eval Example on VQA2.0
 
 For validating `TRAR` model pretrained on `train` split under `ORDERS=[0, 1, 2, 3]`, `ROUTING='hard'`, `POOLING='attention'`, `BINARIZE=False`:
 1. Download the pretrained weight here: [model](https://1drv.ms/f/s!Ary9y5k2nMUxhUNnPf0VnhX-eDW5).
