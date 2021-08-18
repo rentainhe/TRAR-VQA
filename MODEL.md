@@ -15,6 +15,7 @@ We provide three groups of results (including the accuracies of Overall, Yes/No,
 
 **Note that the `BINARIZE` will not influence the training, it only changes the evaluate behavior in TRAR when using `ROUTING='hard'`, so the `BINARIZE=True` and `BINARIZE=False` share the same weight. And `POLICY` and `BINARIZE` is deprecated when `ROUTING='soft'`.**
 
+**Pretrained Model on `8 * 8` Size Train Set**
 | Model    | Base lr | ORDERS      | ROUTING    | POOLING     | POLICY    | BINARIZE |Overall (%) | Yes/No (%) | Number (%) | Other (%) | Download             |
 |:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| hard       | attention   | 1         | False    | 67.61      | 85.22      | 49.66      | 58.97     | [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhUNnPf0VnhX-eDW5) \| [BaiduYun](https://pan.baidu.com/s/1xmtvJRhZPhGnRjf5jtGDqA) `code:v3t8` |
@@ -28,9 +29,17 @@ We provide three groups of results (including the accuracies of Overall, Yes/No,
 ### Train+val -> Test-dev
 **We've observed that TRAR with `ROUTING='soft'`, `POOLING='avg'`, `BINARIZE=False` is a bit more stable. So We trained our model on split `train+val` under these settings**
 
+**Pretrained Model on `8 * 8` Size Train Set**
 | Model    | Base lr | ORDERS      | ROUTING    | POOLING     | POLICY    | BINARIZE |Overall (%) | Yes/No (%) | Number (%) | Other (%) | Download             |
 |:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |
 | **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | avg         | -         | False    | **71.21**  | 85.35      | 53.13      | 61.53     | [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhVX_aC1pEN4HAzTB) \| [BaiduYun](https://pan.baidu.com/s/1nCjnM_-jzUdJMJ94q3rlqg) `code:kwvv` |
+
+
+### Train+val+vg -> Test-dev
+**Pretrained Model on `8 * 8` Size Train Set**
+| Model    | Base lr | ORDERS      | ROUTING    | POOLING     | POLICY    | BINARIZE |Overall (%) | Yes/No (%) | Number (%) | Other (%) | Download             |
+|:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |
+| **TRAR** | 1e-4    | [0, 1, 2, 3]| soft       | avg         | -         | False    | **72.01**  | 87.52      | 55.06      | 62.59     | [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhVX_aC1pEN4HAzTB) \| [BaiduYun](https://pan.baidu.com/s/1nCjnM_-jzUdJMJ94q3rlqg) `code:kwvv` |
 
 ### Eval Example on VQA2.0
 
