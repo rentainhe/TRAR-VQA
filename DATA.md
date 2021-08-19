@@ -26,6 +26,7 @@ All the image features file should be unzipped to `data/vqa/feats` folder as the
 ```
 
 **Extract Feature By Yourself**
+
 If you want to train TRAR on `16 × 16` features, you can extract the features by yourself following these steps: 
 
 clone **our own extension** of `grid-feats-vqa` repo:
