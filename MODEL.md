@@ -84,3 +84,36 @@ BINARIZE: False
 $ cd TRAR-VQA
 $ python3 run.py --DATASET vqa --MODEL trar --RUN test --CKPT_PATH /path/to/epoch13.pkl
 ```
+
+## CLEVR
+We provide a group of results (including Overall, Count, Exist, Compare Numbers, Query Attribute, Compare Attribute) for each model on CLEVR here.
+
+**TRAR CLEVR Config File:** [trar.yml](configs/clevr/trar.yml)
+
+**Note that we've found that use a simple `fc` layer for downsampling in TRAR block is better for CLEVR TRAR training. So we add it in the config file for clevr training.**
+
+### Train -> Val
+| Model    | Base lr | ORDERS      | ROUTING    | POOLING     | POLICY    | BINARIZE |Overall (%) | Count (%) | Exist (%) | Compare Numbers (%) | Query Attribute (%) | Compare Attribute (%) | Download
+|:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |:-------------------: |:-------------------: |
+| **TRAR** | 4e-5    | [0, 1, 3]| hard       | fc         | 0         | True    | **99.09**  | 97.61      | 99.54      | 99.42     | 99.62 | 99.40 | [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhVrCh9y-M7FR9IEM) \| [BaiduYun](https://pan.baidu.com/s/18vl7OT3Vx8qIocsuR1mCfg) `code:yd52`
+
+### Test Example on CLEVR
+For testing `TRAR` model pretrained on `train` split under `ORDERS=[0, 1, 3]`, `ROUTING='hard'`, `POOLING='fc'`, `BINARIZE=True`:
+1. Download the pretrained weight here: [model](https://1drv.ms/f/s!Ary9y5k2nMUxhVrCh9y-M7FR9IEM).
+2. Place the weight `epoch16.pkl` in any folder you like
+3. Check the [trar.yml](configs/clevr/trar.yml) config file:
+```
+...
+ORDERS: [0, 1, 3]
+IMG_SCALE: 14
+ROUTING: 'hard'
+POOLING: 'fc'
+...
+BINARIZE: True
+...
+```
+4. Run the following scripts:
+```bash
+$ cd TRAR-VQA
+$ python3 run.py --DATASET clevr --MODEL trar --RUN val --CKPT_PATH /path/to/epoch16.pkl
+```

@@ -12,8 +12,8 @@ FLAT_OUT_SIZE: 1024
 # TRAR Specific configs
 ORDERS: [0, 1, 3]
 IMG_SCALE: 14
-ROUTING: 'attention' # 'soft' or 'hard'
-POOLING: 'hard' # 'attention' or 'avg'
+ROUTING: 'hard' # 'soft' or 'hard'
+POOLING: 'fc' # 'attention' or 'avg' or 'fc'
 TAU_POLICY: 0 # SLOW 0, FAST 1, FINETUNE 2
 TAU_MAX: 10
 TAU_MIN: 0.1

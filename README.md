@@ -2,6 +2,7 @@
 This is an official implement for ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"](). It currently includes the code for training TRAR on VQA2.0. We built our TRAR project based on [openvqa](https://github.com/MILVLG/openvqa). Our TRAR model for REC task is coming soon.
 
 ## Updates
+- (2021/8/31) Release our pretrained `CLEVR` TRAR model on `train` split.
 - (2021/8/18) Release our pretrained TRAR model on `train+val` split and `train+val+vg` split.
 - (2021/8/16) Release our `train2014`, `val2014` and `test2015` data. Please check [DATA.md](DATA.md) for more details.
 - (2021/8/15) Release our pretrained weight on `train` split. Please check our model page [MODEL.md](MODEL.md) for more details.
@@ -69,7 +70,7 @@ BINARIZE: False
 - `ORDERS=list`, to set the local attention window size for routing.`0` for global attention.
 - `IMG_SCALE=int`, which should be equal to the `image feature size` used for training. You should set `IMG_SCALE: 16` for `16 × 16` training features.
 - `ROUTING={'hard', 'soft'}`, to set the `Routing Block Type` in TRAR model.
-- `POOLING={'attention', 'avg'}`, to set the `Downsample Strategy` used in `Routing Block`.
+- `POOLING={'attention', 'avg', 'fc}`, to set the `Downsample Strategy` used in `Routing Block`.
 - `TAU_POLICY={0, 1, 2}`, to set the `temperature schedule` in training TRAR when using `ROUTING: 'hard'`.
 - `TAU_MAX=float`, to set the maximum temperature in training.
 - `TAU_MIN=float`, to set the minimum temperature in training.

@@ -106,6 +106,8 @@ class SoftRoutingBlock(nn.Module):
             self.pool = AttFlat(in_channel)
         elif pooling == 'avg':
             self.pool = nn.AdaptiveAvgPool1d(1)
+        elif pooling == 'fc':
+            self.pool = nn.Linear(in_channel, 1)
 
         self.mlp = nn.Sequential(
             nn.Linear(in_channel, in_channel // reduction, bias=False),
@@ -121,7 +123,16 @@ class SoftRoutingBlock(nn.Module):
             x = x.transpose(1, 2)
             x = self.pool(x)
             logits = self.mlp(x.squeeze(-1))
-
+        elif self.pooling == 'fc':
+            b, _, c = x.size()
+            mask = self.make_mask(x).squeeze().unsqueeze(2)
+            scores = self.pool(x)
+            scores = scores.masked_fill(mask, -1e9)
+            scores = F.softmax(scores, dim=1)
+            _x = x.mul(scores)
+            x = torch.sum(_x, dim=1)
+            logits = self.mlp(x)
+            
         alpha = F.softmax(logits, dim=-1)  #
         return alpha
 
@@ -141,6 +152,8 @@ class HardRoutingBlock(nn.Module):
             self.pool = AttFlat(in_channel)
         elif pooling == 'avg':
             self.pool = nn.AdaptiveAvgPool1d(1)
+        elif pooling == 'fc':
+            self.pool = nn.Linear(in_channel, 1)
 
         self.mlp = nn.Sequential(
             nn.Linear(in_channel, in_channel // reduction, bias=False),
@@ -156,6 +169,15 @@ class HardRoutingBlock(nn.Module):
             x = x.transpose(1, 2)
             x = self.pool(x)
             logits = self.mlp(x.squeeze(-1))
+        elif self.pooling == 'fc':
+            b, _, c = x.size()
+            mask = self.make_mask(x).squeeze().unsqueeze(2)
+            scores = self.pool(x)
+            scores = scores.masked_fill(mask, -1e9)
+            scores = F.softmax(scores, dim=1)
+            _x = x.mul(scores)
+            x = torch.sum(_x, dim=1)
+            logits = self.mlp(x)
 
         alpha = self.gumbel_softmax(logits, -1, tau)
         return alpha
