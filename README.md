@@ -1,5 +1,5 @@
 # TRAnsformer Routing Networks (TRAR)
-This is an official implement for ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"](). It currently includes the code for training TRAR on **VQA2.0** and **CLEVR**. We built our TRAR project based on [openvqa](https://github.com/MILVLG/openvqa). Our TRAR model for REC task is coming soon.
+This is an official implementation for ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"](). It currently includes the code for training TRAR on **VQA2.0** and **CLEVR** dataset. Our TRAR model for REC task is coming soon.
 
 ## Updates
 - (2021/8/31) Release our pretrained `CLEVR` TRAR model on `train` split: [TRAR CLEVR Pretrained Models](MODEL.md#CLEVR).
