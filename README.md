@@ -2,9 +2,9 @@
 This is an official implement for ICCV 2021 paper ["TRAR: Routing the Attention Spans in Transformers for Visual Question Answering"](). It currently includes the code for training TRAR on VQA2.0. We built our TRAR project based on [openvqa](https://github.com/MILVLG/openvqa). Our TRAR model for REC task is coming soon.
 
 ## Updates
-- (2021/8/31) Release our pretrained `CLEVR` TRAR model on `train` split.
-- (2021/8/18) Release our pretrained TRAR model on `train+val` split and `train+val+vg` split.
-- (2021/8/16) Release our `train2014`, `val2014` and `test2015` data. Please check [DATA.md](DATA.md) for more details.
+- (2021/8/31) Release our pretrained `CLEVR` TRAR model on `train` split: [TRAR CLEVR Pretrained Models](MODEL.md#CLEVR).
+- (2021/8/18) Release our pretrained TRAR model on `train+val` split and `train+val+vg` split: [VQA-v2 TRAR Pretrained Models](MODEL.md#VQA-v2) 
+- (2021/8/16) Release our `train2014`, `val2014` and `test2015` data. Please check our dataset setup page [DATA.md](DATA.md) for more details.
 - (2021/8/15) Release our pretrained weight on `train` split. Please check our model page [MODEL.md](MODEL.md) for more details.
 - (2021/8/13) The project page for TRAR is avaliable.
 

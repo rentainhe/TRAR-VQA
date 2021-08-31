@@ -95,7 +95,7 @@ We provide a group of results (including Overall, Count, Exist, Compare Numbers,
 ### Train -> Val
 | Model    | Base lr | ORDERS      | ROUTING    | POOLING     | POLICY    | BINARIZE |Overall (%) | Count (%) | Exist (%) | Compare Numbers (%) | Query Attribute (%) | Compare Attribute (%) | Download
 |:--------:|:-------:|:-----------:|:----------:|:-----------:|:---------:|:--------:|:----------:|:----------:|:----------:|:---------:|:-------------------: |:-------------------: |:-------------------: |
-| **TRAR** | 4e-5    | [0, 1, 3]| hard       | fc         | 0         | True    | **99.09**  | 97.61      | 99.54      | 99.42     | 99.62 | 99.40 | [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhVrCh9y-M7FR9IEM) \| [BaiduYun](https://pan.baidu.com/s/18vl7OT3Vx8qIocsuR1mCfg) `code:yd52`
+| **TRAR** | 4e-5    | [0, 1, 3]| hard       | fc         | 0         | True    | **99.08**  | 97.61      | 99.54      | 99.42     | 99.62 | 99.40 | [OneDrive](https://1drv.ms/f/s!Ary9y5k2nMUxhVrCh9y-M7FR9IEM) \| [BaiduYun](https://pan.baidu.com/s/18vl7OT3Vx8qIocsuR1mCfg) `code:yd52`
 
 ### Test Example on CLEVR
 For testing `TRAR` model pretrained on `train` split under `ORDERS=[0, 1, 3]`, `ROUTING='hard'`, `POOLING='fc'`, `BINARIZE=True`:
