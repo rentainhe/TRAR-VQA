@@ -61,7 +61,7 @@ In [trar.yml](configs/vqa/trar.yml) config we have these specific settings for `
 ORDERS: [0, 1, 2, 3]
 IMG_SCALE: 8 
 ROUTING: 'hard' # {'soft', 'hard'}
-POOLING: 'attention' # {'attention', 'avg'}
+POOLING: 'attention' # {'attention', 'avg', 'fc'}
 TAU_POLICY: 1 # {0: 'SLOW', 1: 'FAST', 2: 'FINETUNE'}
 TAU_MAX: 10
 TAU_MIN: 0.1
