@@ -90,7 +90,7 @@ We provide a group of results (including Overall, Count, Exist, Compare Numbers,
 
 **TRAR CLEVR Config File:** [trar.yml](configs/clevr/trar.yml)
 
-**Note that we've found that use a simple `fc` layer for downsampling in TRAR block is better for CLEVR TRAR training. So we add it in the config file for clevr training.**
+**Note that we've found that using a simple `fc` layer for downsampling in TRAR block is better for CLEVR TRAR training. So we add it in the config file for clevr training.**
 
 ### Train -> Val
 | Model    | Base lr | ORDERS      | ROUTING    | POOLING     | POLICY    | BINARIZE |Overall (%) | Count (%) | Exist (%) | Compare Numbers (%) | Query Attribute (%) | Compare Attribute (%) | Download
