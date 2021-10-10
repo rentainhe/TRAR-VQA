@@ -161,3 +161,13 @@ Here we provide our pretrained model and log, please see [MODEL.md](MODEL.md)
 
 ## Citation
 if this repository is helpful for your research, we'd really appreciate it if you could cite the following paper:
+```
+@InProceedings{Zhou_2021_ICCV,
+    author    = {Zhou, Yiyi and Ren, Tianhe and Zhu, Chaoyang and Sun, Xiaoshuai and Liu, Jianzhuang and Ding, Xinghao and Xu, Mingliang and Ji, Rongrong},
+    title     = {TRAR: Routing the Attention Spans in Transformer for Visual Question Answering},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2021},
+    pages     = {2074-2084}
+}
+```
