@@ -160,7 +160,7 @@ Here we provide our pretrained model and log, please see [MODEL.md](MODEL.md)
 - [grid-feats-vqa](https://github.com/facebookresearch/grid-feats-vqa)
 
 ## Citation
-if this repository is helpful for your research, we'd really appreciate it if you could cite the following paper:
+if TRAR is helpful for your research or you wish to refer the baseline results published here, we'd really appreciate it if you could cite this paper:
 ```
 @InProceedings{Zhou_2021_ICCV,
     author    = {Zhou, Yiyi and Ren, Tianhe and Zhu, Chaoyang and Sun, Xiaoshuai and Liu, Jianzhuang and Ding, Xinghao and Xu, Mingliang and Ji, Rongrong},
