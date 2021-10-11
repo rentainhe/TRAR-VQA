@@ -359,9 +359,8 @@ class SARoutingBlock(nn.Module):
         indexes = alphas.argmax(-1)
         out[torch.arange(n), indexes] = 1
         return out
-    # ---------------------------
-
-
+    
+# ---------------------------
 # ---- Feed Forward Nets ----
 # ---------------------------
 
